@@ -16,15 +16,17 @@ class App extends Component {
     ],
     filter: '',
   }
-  componentDidUpdate(prevState, prevProps) { 
+  componentDidUpdate(_, prevState) { 
+    if (this.state.contacts !== prevState.contacts) {
       localStorage.setItem(CONTACTS_KEY, JSON.stringify(this.state.contacts));
-    
+    }
   }
 
   componentDidMount() { 
     const contactsFromStorage = JSON.parse(localStorage.getItem(CONTACTS_KEY));
-    this.setState({contacts: contactsFromStorage})
-
+    if (contactsFromStorage) {
+      this.setState({ contacts: contactsFromStorage })
+    }
   }
 
 formSubmitHandle = data => {
